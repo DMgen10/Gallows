@@ -3,7 +3,7 @@ package dev.dmitry;
 public class Game {
 
     public void greetThePlayer(){
-        System.out.println("Привет, игрок! Добро пожаловать в игру \"Виселица\"!\n" +           // надо будет перевести н
+        System.out.println("Привет, игрок! Добро пожаловать в игру \"Виселица\"!\n" +           // надо будет перевести нах
                 "\n" +
                 "Правила игры:\n" +
                 "\n" +
