@@ -18,7 +18,8 @@ public class VisibilityModifier {
         }
 
 
-        System.out.println(updatedWord);
+
+        System.out.println(word.replaceAll(".","*"));
     }
 
 
