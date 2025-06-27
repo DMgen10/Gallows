@@ -8,7 +8,7 @@ public class VisibilityModifier {
         return word.replace(".","*");
     }
 
-    public void updateState(String word, String letter){
+    public void updateState(String word){
 
 
         if (letter.contains(word)){
