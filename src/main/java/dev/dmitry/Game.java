@@ -13,21 +13,26 @@ public class Game {
     private final InputService inputService = new InputService();
     private final WordParser parser = new WordParser();
     private final WordGenerator generator = new WordGenerator(parser);
-    private final VisibilityModifier modifier;
-
+    private VisibilityModifier modifier;
+    private String hiddenWord;
     private int numberOfErrors = 0;
+    private final int maxErrors = 6;
 
     private void doPlay(){
         parser.loadWords();
         generator.generate();
+        hiddenWord = generator.getRandomWord();
+        modifier = new VisibilityModifier(generator.getRandomWord());
     }
 
     public void play(){
         doPlay();
-        modifier = new VisibilityModifier(generator.getRandomWord())
-        while (numberOfErrors < 6){
+        while (numberOfErrors < maxErrors && !modifier.isFullyRevealed()){
+            System.out.println("Слово " + modifier.getMaskedWord());
+            System.out.println("Осталось попыток: " + (maxErrors - numberOfErrors));
+
             String input = inputService.readInput();
-            System.out.println(modifier.updateState(input));
+
         }
     }
 }
