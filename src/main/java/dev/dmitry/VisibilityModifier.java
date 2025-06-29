@@ -10,18 +10,13 @@ public class VisibilityModifier {
         this.maskedWord = new StringBuilder("*".repeat(originalWord.length()));
     }
 
-    public void updateState(String word){
-
-
-        // Проверки введенного символа: 1.что бы он был один 2. все символы будут притянуты к нижнему регистру 3. русский язык!ир
-//        if (letter.contains(word)){
-//            // буква открывается
-//        } else {
-//            // буква не открывается
-//        }
-
-
-        System.out.println(word.replaceAll(".","*"));
+    public void updateState(String letter){
+        char letterChar = letter.charAt(0);
+        for (int index = 0; index < originalWord.length();index++){
+            if (letter.charAt(index) == letterChar){
+                maskedWord.setCharAt(index, letterChar);
+            }
+        }
     }
 
 
