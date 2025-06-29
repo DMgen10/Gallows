@@ -2,57 +2,32 @@ package dev.dmitry;
 
 public class Game {
 
+    /*
+    1. Приветствие + инструкция 1 раз (цикл do while) или пре-метод
+    2. Получаем слова, генерим слово -> кладем в место для угадывания
+    3. Пользователь вводит буквы, мы их проверяем на валидность
+    4. Если ок то у слова снимается маска в месте, где была буква, если нет то минус был (5 попыток)
+    5. Визуальное составление виселицы
+     */
 
+    private final InputService inputService = new InputService();
+    private final WordParser parser = new WordParser();
+    private final WordGenerator generator = new WordGenerator(parser);
+    private final VisibilityModifier modifier;
 
+    private int numberOfErrors = 0;
 
+    private void doPlay(){
+        parser.loadWords();
+        generator.generate();
+    }
 
-
-
-//    private pre-game setup
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public void greetThePlayer(){
-//        System.out.println("Привет, игрок! Добро пожаловать в игру \"Виселица\"!\n" +           // надо будет перевести нах
-//                "\n" +
-//                "Правила игры:\n" +
-//                "Я загадываю случайное слово — имя существительное в именительном падеже.\n" +
-//                "Вы видите пустую виселицу и количество букв в слове (в виде скрытых символов, например: _ _ _ _ _).\n" +
-//                "Ваша задача — по одной угадывать буквы, которые могут входить в это слово.\n" +
-//                "Если угаданная буква есть в слове — она открывается во всех местах, где встречается.\n" +
-//                "Если буквы нет — добавляется часть тела к виселице.\n" +
-//                "Всего у вас 6 попыток.\n" +
-//                "Если тело нарисовано полностью — вы проиграли.\n" +
-//                "Если откроете все буквы — вы победили!\n" +
-//                "После победы или поражения вы можете сыграть снова. Удачи!");
-//    }
-
-    public void play(){}
-
+    public void play(){
+        doPlay();
+        modifier = new VisibilityModifier(generator.getRandomWord())
+        while (numberOfErrors < 6){
+            String input = inputService.readInput();
+            System.out.println(modifier.updateState(input));
+        }
+    }
 }
