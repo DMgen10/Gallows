@@ -19,5 +19,8 @@ public class VisibilityModifier {
         }
     }
 
+    public boolean isFullyRevealed(){
+        return !maskedWord.toString().contains("*");
+    }
 
 }
