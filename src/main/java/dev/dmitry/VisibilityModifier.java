@@ -23,4 +23,7 @@ public class VisibilityModifier {
         return !maskedWord.toString().contains("*");
     }
 
+    public StringBuilder getMaskedWord() {
+        return maskedWord;
+    }
 }
