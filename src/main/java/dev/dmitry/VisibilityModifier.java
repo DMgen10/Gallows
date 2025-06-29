@@ -3,9 +3,9 @@ package dev.dmitry;
 public class VisibilityModifier {
 
 
-
-    private String maskOn(String word){
-        return word.replace(".","*");
+    public VisibilityModifier(String originalWord) {
+        this.originalWord = originalWord;
+        this.maskedWord = new StringBuilder("*".repeat(originalWord.length()));
     }
 
     public void updateState(String word){
