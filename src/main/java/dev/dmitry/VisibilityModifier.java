@@ -10,7 +10,7 @@ public class VisibilityModifier {
         this.maskedWord = new StringBuilder("*".repeat(originalWord.length()));
     }
 
-    public void updateState(String letter){
+    public boolean updateState(String letter){
         char letterChar = letter.charAt(0);
         for (int index = 0; index < originalWord.length();index++){
             if (letter.charAt(index) == letterChar){
