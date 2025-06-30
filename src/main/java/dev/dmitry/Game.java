@@ -17,6 +17,9 @@ public class Game {
     private String hiddenWord;
     private int numberOfErrors = 0;
     private final int maxErrors = 6;
+    private final List<String> usedLetters = new ArrayList<>();
+
+
 
     private void doPlay(){
         parser.loadWords();
