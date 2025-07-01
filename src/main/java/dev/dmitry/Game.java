@@ -12,7 +12,7 @@ public class Game {
     4. Если ок то у слова снимается маска в месте, где была буква, если нет то минус был (5 попыток)
     5. Визуальное составление виселицы
      */
-
+    private final ReplayGame replayGame = new ReplayGame();
     private final InputService inputService = new InputService();
     private final WordParser parser = new WordParser();
     private final WordGenerator generator = new WordGenerator(parser);
@@ -23,18 +23,66 @@ public class Game {
     private final List<String> usedLetters = new ArrayList<>();
     private final List<String> wrongLetters = new ArrayList<>();
 
+
     private void doPlay(){
         parser.loadWords();
         generator.generate();
         hiddenWord = generator.getRandomWord();
         modifier = new VisibilityModifier(hiddenWord);
     }
+//
+//    public void play(){
+//        boolean isGame = true;
+//
+//        game();
+//        if (isEnd){
+//            if (replayGame)
+//        }
+//        // крутится сама игра
+//        // если игра проиграна или выиграна - задается вопрос о продолжении
+//        // если 1 - обновляем и продолжаем если 2 - закрываем
+//
+//
+//        do {
+//            //приветствие один раз
+//        } while (isGame);
+//    }
 
-    public void play(){
+    public void play() {
+        System.out.println("Добро пожаловать в игру Виселица!");
+        System.out.printf("У вас %s попыток.\n", maxErrors);
+
+        boolean isGameRunning = true;
+
+        while (isGameRunning) {
+            reset();
+                    // сбрасываем состояние
+            game();
+            // запускаем
+
+
+            isGameRunning = replayGame.askReplay();
+        }
+
+        System.out.println("Выход из игры...");
+    }
+
+
+    private void reset() {
+        usedLetters.clear();
+        wrongLetters.clear();
+        numberOfErrors = 0;
+        parser.loadWords();
+        generator.generate();
+        hiddenWord = generator.getRandomWord();
+        modifier = new VisibilityModifier(hiddenWord);
+    }
+
+    public void game(){
         doPlay();
 
         while (numberOfErrors < maxErrors && !modifier.isFullyRevealed()){
-            System.out.println("Слово " + modifier.getMaskedWord());
+            System.out.printf("Слово: '%s'\n", modifier.getMaskedWord());
             System.out.println("Осталось попыток: " + (maxErrors - numberOfErrors));
             String input = inputService.readInput();
             System.out.println("Ошибочные буквы: " + String.join(", ", wrongLetters));
@@ -42,10 +90,8 @@ public class Game {
                 System.out.println("Вы уже вводили букву '" + input + "'. Попробуйте другую.");
                 continue;
             }
-
             usedLetters.add(input);
             boolean isFound = modifier.updateState(input);
-
             if (!isFound) {
                 numberOfErrors++;
                 wrongLetters.add(input);
