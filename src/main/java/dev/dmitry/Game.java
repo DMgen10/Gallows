@@ -82,12 +82,12 @@ public class Game {
         doPlay();
 
         while (numberOfErrors < maxErrors && !modifier.isFullyRevealed()){
-            System.out.printf("Слово: '%s'\n", modifier.getMaskedWord());
-            System.out.println("Осталось попыток: " + (maxErrors - numberOfErrors));
+            System.out.printf("Слово: %s\n", modifier.getMaskedWord());
+            System.out.printf("Осталось попыток: %s\n",(maxErrors - numberOfErrors));
             String input = inputService.readInput();
-            System.out.println("Ошибочные буквы: " + String.join(", ", wrongLetters));
+            System.out.printf("Ошибочные буквы: %s ",String.join(", ", wrongLetters));
             if (usedLetters.contains(input)) {
-                System.out.println("Вы уже вводили букву '" + input + "'. Попробуйте другую.");
+                System.out.printf("Вы уже вводили букву '%s'\n", input);
                 continue;
             }
             usedLetters.add(input);
@@ -95,16 +95,16 @@ public class Game {
             if (!isFound) {
                 numberOfErrors++;
                 wrongLetters.add(input);
-                System.out.println("В загаданном слове буква " + input + " отсутствует ");
+                System.out.printf("В загаданном слове буква '%s' отсутствует\n", input);
             } else {
-                System.out.println("Ты прав, буква " + input + "есть в слове!");
+                System.out.printf("Ты прав, буква %s есть в загаданном слове! \n", input);
             }
             System.out.println();
         }
         if (modifier.isFullyRevealed()){
-            System.out.println("Вы выиграли, загаданным словом было: " + hiddenWord);
+            System.out.printf("Вы выиграли, загаданным словом было: %s\n", hiddenWord);
         } else {
-            System.out.println("Вы проиграли, загаданным словом было: " + hiddenWord);
+            System.out.printf("Вы проиграли, загаданным словом было: %s\n", hiddenWord);
         }
     }
 }
