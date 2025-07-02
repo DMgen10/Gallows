@@ -5,13 +5,7 @@ import java.util.List;
 
 public class Game {
 
-    /*
-    1. Приветствие + инструкция 1 раз (цикл do while) или пре-метод
-    2. Получаем слова, генерим слово -> кладем в место для угадывания
-    3. Пользователь вводит буквы, мы их проверяем на валидность
-    4. Если ок то у слова снимается маска в месте, где была буква, если нет то минус был (5 попыток)
-    5. Визуальное составление виселицы
-     */
+    private final GallowsVisualizer visualizer = new GallowsVisualizer();
     private final ReplayGame replayGame = new ReplayGame();
     private final InputService inputService = new InputService();
     private final WordParser parser = new WordParser();
@@ -20,9 +14,10 @@ public class Game {
     private String hiddenWord;
     private int numberOfErrors = 0;
     private final int maxErrors = 6;
+    private final SelectStyle selectStyle = new SelectStyle();
+    private boolean useSmileStyle = false;
     private final List<String> usedLetters = new ArrayList<>();
     private final List<String> wrongLetters = new ArrayList<>();
-
 
     private void doPlay(){
         parser.loadWords();
@@ -30,43 +25,23 @@ public class Game {
         hiddenWord = generator.getRandomWord();
         modifier = new VisibilityModifier(hiddenWord);
     }
-//
-//    public void play(){
-//        boolean isGame = true;
-//
-//        game();
-//        if (isEnd){
-//            if (replayGame)
-//        }
-//        // крутится сама игра
-//        // если игра проиграна или выиграна - задается вопрос о продолжении
-//        // если 1 - обновляем и продолжаем если 2 - закрываем
-//
-//
-//        do {
-//            //приветствие один раз
-//        } while (isGame);
-//    }
 
     public void play() {
-        System.out.println("Добро пожаловать в игру Виселица!");
-        System.out.printf("У вас %s попыток.\n", maxErrors);
+        showGameImage();
+        System.out.println("ВИСЕЛИЦА\n");
+        useSmileStyle = selectStyle.selectStyle();
+        System.out.printf("у вас %s попыток.\n", maxErrors);
+        System.out.println("вводите буквы...");
 
         boolean isGameRunning = true;
 
         while (isGameRunning) {
             reset();
-                    // сбрасываем состояние
             game();
-            // запускаем
-
-
             isGameRunning = replayGame.askReplay();
         }
-
-        System.out.println("Выход из игры...");
+        System.out.println("выход из игры...");
     }
-
 
     private void reset() {
         usedLetters.clear();
@@ -82,12 +57,12 @@ public class Game {
         doPlay();
 
         while (numberOfErrors < maxErrors && !modifier.isFullyRevealed()){
-            System.out.printf("Слово: %s\n", modifier.getMaskedWord());
-            System.out.printf("Осталось попыток: %s\n",(maxErrors - numberOfErrors));
+            System.out.printf("слово: %s\n", modifier.getMaskedWord());
+            System.out.printf("осталось попыток: %s\n",(maxErrors - numberOfErrors));
             String input = inputService.readInput();
-            System.out.printf("Ошибочные буквы: %s ",String.join(", ", wrongLetters));
+            System.out.printf("ошибочные буквы: %s \n",String.join(", ", wrongLetters));
             if (usedLetters.contains(input)) {
-                System.out.printf("Вы уже вводили букву '%s'\n", input);
+                System.out.printf("вы уже вводили букву '%s'...\n", input);
                 continue;
             }
             usedLetters.add(input);
@@ -95,16 +70,65 @@ public class Game {
             if (!isFound) {
                 numberOfErrors++;
                 wrongLetters.add(input);
-                System.out.printf("В загаданном слове буква '%s' отсутствует\n", input);
+                System.out.printf("в загаданном слове буква '%s' отсутствует...\n", input);
             } else {
-                System.out.printf("Ты прав, буква %s есть в загаданном слове! \n", input);
+                System.out.printf("вы правы... буква %s присутствует в загаданном слове! \n", input);
             }
             System.out.println();
+
+            if (useSmileStyle) {
+                visualizer.showStatusSmile(numberOfErrors);
+            } else {
+                visualizer.showStatusGallows(numberOfErrors);
+            }
         }
         if (modifier.isFullyRevealed()){
-            System.out.printf("Вы выиграли, загаданным словом было: %s\n", hiddenWord);
+            System.out.printf("вы выиграли, загаданным словом было: %s\n", hiddenWord);
         } else {
-            System.out.printf("Вы проиграли, загаданным словом было: %s\n", hiddenWord);
+            System.out.printf("вы проиграли, загаданным словом было: %s\n", hiddenWord);
         }
+    }
+
+    public void showGameImage(){
+        System.out.println("\n" +
+                "\n" +
+                "████████████████████████████████████████████████████████████████████\n" +
+                "████████████████████████████████████████████████████████████████████\n" +
+                "████████████████████████████████████████████████████████████████████\n" +
+                "████████████████████████████████████████████████████████████████████\n" +
+                "██████████████████████████████▓█████▓▓██████████████████████████████\n" +
+                "████████████████████▓▓▓▓▓▓▓▓▓▓▓▓████▓▓▓▓▓▓▓▓████▓███████████████████\n" +
+                "████████████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▓▓▓▓▓█████████▓▓████████████████\n" +
+                "███████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██▓█▓▓▓██▓████████▓▓▓▓▓▓▓███████████\n" +
+                "█████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▓██▓▓█████████▓▓▓▓▓▓▓▓▓▓████████\n" +
+                "██████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓█████▓█████▓██████████▓▓▓▓▓▓▓▓▓▓▓█▓████\n" +
+                "███▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒███▒████████▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███\n" +
+                "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒███▓█▓▓▓▓▒▓█▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▓▓█▓█▓███████▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓██▓██▒▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▓▒█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░▓██▓█▓▒▓▓▓██▒░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░██▓▒█▓▒▓▓███░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░█▓█▓▒▓▓▓██▒░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░█████████░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░████▒████▒░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓\n" +
+                "▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░▓█▓█░░░▓▒▓█▓░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▓▓▓▓\n" +
+                "▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░█▒██░░░░░▓▓███░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▓▓▓\n" +
+                "▓▓▓▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░▓█▓█░░░░░░░▒▓▓▓█░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░▒█▒██░░░░░░░░░▒▒▓██▒░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▓▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░▓███░░░░░░░░░░░░▓▓██░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▓▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░█▓██░░░░░░░░░░░░░▓▓███░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒░░░░░░░░░░░▓▓██░░░░░░░░░░░░░░░█▓██░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒░░░░░░░░░░░████░░░░░░░░░░░░░░░▓▓██░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░▒▓██░░░░░░░░░░░░░░░█▓██░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░▓███░░░░░░░░░░░░░░█▓██░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▓▓\n" +
+                "▓▓▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░▓▓███░░░░░░░░░░▓█▓███░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▓▓\n" +
+                "▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░████████░████▓▓███░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▓▓▓\n" +
+                "▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░▓███▓▓██▓████▒░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓\n" +
+                "▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░▒▓████▒░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓\n" +
+                "▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓\n" +
+                "▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓\n" +
+                "\n");
     }
 }
