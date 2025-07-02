@@ -43,7 +43,7 @@ public class InputService {
         return letter.length() == 1;
     }
 
-    private boolean isLetter(String letter){        // проверка на то что строка является строкой а не цифрой и т.д...
+    private boolean isLetter(String letter){
         return Character.isLetter(letter.charAt(0));
     }
 
