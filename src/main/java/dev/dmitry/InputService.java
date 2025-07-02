@@ -12,7 +12,6 @@ public class InputService {
     public String readInput(){
 
         while (true){
-//            System.out.println("Введите одну русскую букву");
             String letter = scanner.nextLine().toLowerCase();
 
             if (!isSingleCharacter(letter)){
