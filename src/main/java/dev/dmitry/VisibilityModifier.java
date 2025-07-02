@@ -11,12 +11,17 @@ public class VisibilityModifier {
     }
 
     public boolean updateState(String letter){
+
         char letterChar = letter.charAt(0);
+        boolean isFound = false;
+
         for (int index = 0; index < originalWord.length();index++){
-            if (letter.charAt(index) == letterChar){
+            if (originalWord.charAt(index) == letterChar){
                 maskedWord.setCharAt(index, letterChar);
+                isFound = true;
             }
         }
+        return isFound;
     }
 
     public boolean isFullyRevealed(){
