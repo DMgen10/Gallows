@@ -25,7 +25,7 @@ public class InputService {
             }
 
             if (!isRussianLetter(letter)){
-                System.out.println("Необходимо использовать кириллицу");
+                System.out.println("необходимо использовать кириллицу");
                 continue;
             }
 
