@@ -15,7 +15,7 @@ public class InputService {
             String letter = scanner.nextLine().toLowerCase();
 
             if (!isSingleCharacter(letter)){
-                System.out.println("Введите ровно один символ");
+                System.out.println("введите ровно один символ");
                 continue;
             }
 
