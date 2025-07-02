@@ -39,7 +39,7 @@ public class InputService {
         return scanner.nextLine().trim();
     }
 
-    private boolean isSingleCharacter(String letter){        // проверка что символ ОДИН!!!!
+    private boolean isSingleCharacter(String letter){
         return letter.length() == 1;
     }
 
