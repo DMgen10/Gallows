@@ -6,7 +6,7 @@ public class WordGenerator {
 
     private WordParser wordParser;
     private Random random = new Random();
-    private static String randomWord;   // это слово буду отдавать на отгадывание
+    private static String randomWord;
     static private int index;
 
     public WordGenerator(WordParser wordParser) {
