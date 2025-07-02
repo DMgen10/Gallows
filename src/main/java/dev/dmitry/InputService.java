@@ -29,7 +29,7 @@ public class InputService {
                 continue;
             }
 
-            System.out.println("Вы ввели:" + letter);
+            System.out.println("вы ввели:" + letter);
             return letter;
         }
     }
