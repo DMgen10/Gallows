@@ -47,7 +47,7 @@ public class InputService {
         return Character.isLetter(letter.charAt(0));
     }
 
-    private boolean isRussianLetter(String letter){       // проверяем на рус. язык
+    private boolean isRussianLetter(String letter){
         return letter.matches("[А-Яа-яЁё]");
     }
 
