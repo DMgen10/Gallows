@@ -3,9 +3,6 @@ import java.util.Scanner;
 
 public class InputService {
 
-    // Проверки введенного символа: 1.что бы он был один 2. все символы будут притянуты к нижнему регистру 3. русский язык!
-    // 4. это должна быть строка
-
     private final Scanner scanner;
 
     public InputService(){
@@ -15,7 +12,7 @@ public class InputService {
     public String readInput(){
 
         while (true){
-            System.out.println("Введите одну русскую букву");
+//            System.out.println("Введите одну русскую букву");
             String letter = scanner.nextLine().toLowerCase();
 
             if (!isSingleCharacter(letter)){
@@ -29,13 +26,18 @@ public class InputService {
             }
 
             if (!isRussianLetter(letter)){
-                System.out.println("Вы ввели не Русскую букву");
+                System.out.println("Необходимо использовать кириллицу");
                 continue;
             }
 
             System.out.println("Вы ввели:" + letter);
             return letter;
         }
+    }
+
+    public String readMenuInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine().trim();
     }
 
     private boolean isSingleCharacter(String letter){        // проверка что символ ОДИН!!!!
