@@ -20,7 +20,7 @@ public class InputService {
             }
 
             if (!isLetter(letter)){
-                System.out.println("Введенный символ не является буквой");
+                System.out.println("введенный символ не является буквой");
                 continue;
             }
 
