@@ -10,6 +10,7 @@ public class Game {
     private final InputService inputService = new InputService();
     private final WordParser parser = new WordParser();
     private final WordGenerator generator = new WordGenerator(parser);
+    private final SelectStyle selectStyle = new SelectStyle();
     private VisibilityModifier modifier;
     private String hiddenWord;
     private int numberOfErrors = 0;
