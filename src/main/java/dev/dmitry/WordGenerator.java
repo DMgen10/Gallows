@@ -7,7 +7,7 @@ public class WordGenerator {
     private WordParser wordParser;
     private Random random = new Random();
     private static String randomWord;
-    static private int index;
+    private static int index;
 
     public WordGenerator(WordParser wordParser) {
         this.wordParser = wordParser;
