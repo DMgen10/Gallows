@@ -15,7 +15,7 @@ public class ReplayGame {
     public boolean askReplay(){
 
         while (true){
-            System.out.println("Хотите сыграть ещё раз? \n1 - да, 2 - нет");
+            System.out.println("хотите сыграть ещё раз? \n1 - да, 2 - нет");
             String choice = scanner.nextLine();
             if (choice.equals(START)){
                 return true;
