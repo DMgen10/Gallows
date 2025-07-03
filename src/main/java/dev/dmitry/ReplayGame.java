@@ -22,7 +22,7 @@ public class ReplayGame {
             } else if (choice.equals(QUIT)){
                 return false;
             } else {
-                System.out.println("Вы вводите что-то другое...");
+                System.out.println("вы вводите что-то другое...");
             }
         }
     }
