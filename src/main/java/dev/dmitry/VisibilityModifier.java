@@ -2,8 +2,8 @@ package dev.dmitry;
 
 public class VisibilityModifier {
 
-    String originalWord;
-    StringBuilder maskedWord;
+    private String originalWord;
+    private StringBuilder maskedWord;
 
     public VisibilityModifier(String originalWord) {
         this.originalWord = originalWord;
