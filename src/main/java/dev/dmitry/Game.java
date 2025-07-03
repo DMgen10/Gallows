@@ -19,13 +19,6 @@ public class Game {
     private final List<String> usedLetters = new ArrayList<>();
     private final List<String> wrongLetters = new ArrayList<>();
 
-    private void doPlay(){
-        parser.loadWords();
-        generator.generate();
-        hiddenWord = generator.getRandomWord();
-        modifier = new VisibilityModifier(hiddenWord);
-    }
-
     public void play() {
         showGameImage();
         System.out.println("ВИСЕЛИЦА\n");
@@ -41,16 +34,6 @@ public class Game {
             isGameRunning = replayGame.askReplay();
         }
         System.out.println("выход из игры...");
-    }
-
-    private void reset() {
-        usedLetters.clear();
-        wrongLetters.clear();
-        numberOfErrors = 0;
-        parser.loadWords();
-        generator.generate();
-        hiddenWord = generator.getRandomWord();
-        modifier = new VisibilityModifier(hiddenWord);
     }
 
     public void game(){
