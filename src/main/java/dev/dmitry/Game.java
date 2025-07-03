@@ -15,7 +15,6 @@ public class Game {
     private String hiddenWord;
     private int numberOfErrors = 0;
     private final int maxErrors = 6;
-    private final SelectStyle selectStyle = new SelectStyle();
     private boolean useSmileStyle = false;
     private final List<String> usedLetters = new ArrayList<>();
     private final List<String> wrongLetters = new ArrayList<>();
