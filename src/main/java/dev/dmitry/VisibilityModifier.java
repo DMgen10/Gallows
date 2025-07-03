@@ -11,7 +11,6 @@ public class VisibilityModifier {
     }
 
     public boolean updateState(String letter){
-
         char letterChar = letter.charAt(0);
         boolean isFound = false;
 
