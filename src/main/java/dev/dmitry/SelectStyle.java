@@ -16,7 +16,7 @@ public class SelectStyle {
             } else if (choice.equals("2")) {
                 return true;
             } else {
-                System.out.println("Вы вводите что-то иное...");
+                System.out.println("вы вводите что-то другое...");
             }
         }
     }
