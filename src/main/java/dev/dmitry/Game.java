@@ -131,4 +131,21 @@ public class Game {
                 "▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓\n" +
                 "\n");
     }
+
+    private void doPlay(){
+        parser.loadWords();
+        generator.generate();
+        hiddenWord = generator.getRandomWord();
+        modifier = new VisibilityModifier(hiddenWord);
+    }
+
+    private void reset() {
+        usedLetters.clear();
+        wrongLetters.clear();
+        numberOfErrors = 0;
+        parser.loadWords();
+        generator.generate();
+        hiddenWord = generator.getRandomWord();
+        modifier = new VisibilityModifier(hiddenWord);
+    }
 }
